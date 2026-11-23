@@ -8,7 +8,7 @@ namespace TestProject.Controllers {
         private readonly string _root;
 
         public FilesController(IConfiguration config, IWebHostEnvironment env) {
-            _root = Path.TrimEndingDirectorySeparator(Path.GetFullPath("files", env.ContentRootPath));
+            _root = Path.TrimEndingDirectorySeparator(Path.GetFullPath(config["HomeDirectory"] ?? "files", env.ContentRootPath));
             Directory.CreateDirectory(_root);
         }
 
