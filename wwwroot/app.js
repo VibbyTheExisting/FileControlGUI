@@ -101,5 +101,18 @@ document.getElementById("upload").addEventListener("submit", async e => {
     load();
 });
 
+document.getElementById("newFolder").addEventListener("submit", async e => {
+    e.preventDefault();
+    const name = document.getElementById("folderName").value.trim();
+    if (!name) return;
+
+    const params = new URLSearchParams({ path: readState().path, name });
+    const response = await fetch("/api/files/folder?" + params, { method: "POST" });
+    if (!response.ok) document.getElementById("error").textContent = "Could not create folder";
+
+    document.getElementById("folderName").value = "";
+    load();
+});
+
 window.addEventListener("hashchange", load);
 load();

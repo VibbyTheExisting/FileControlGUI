@@ -74,5 +74,17 @@ namespace TestProject.Controllers {
             }
             return Ok();
         }
+
+        [HttpPost("folder")]
+        public IActionResult CreateFolder(string? path, string name) {
+            var dir = Resolve(path);
+            if (dir == null || !Directory.Exists(dir)) return NotFound();
+
+            var folder = Path.GetFileName(name);
+            if (string.IsNullOrWhiteSpace(folder)) return BadRequest();
+
+            Directory.CreateDirectory(Path.Combine(dir, folder));
+            return Ok();
+        }
     }
 }
